@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# generated at workflow runtime, not committed to source
+requirement_analysis.json
+generated-ci-cd.yml
+scan_results.json
+bandit_results.json
+semgrep_results.json
+fixes.json
+pr_body.md
+fix_pr_body.md

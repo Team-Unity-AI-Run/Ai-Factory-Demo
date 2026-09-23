@@ -1,0 +1,69 @@
+name: Security Scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install bandit semgrep || true
+
+      - name: Custom code scan
+        run: python scripts/scan_code.py . || true
+
+      - name: Bandit scan
+        run: bandit -r . -x .git,node_modules,venv,.venv,__pycache__ -f json -o bandit_results.json || true
+
+      - name: Semgrep scan
+        run: semgrep --config auto --json --output semgrep_results.json . || true
+        continue-on-error: true
+
+      - name: Build Docker image for scanning
+        if: hashFiles('Dockerfile') != ''
+        run: docker build -t demo-app .
+
+      - name: Trivy image scan
+        if: hashFiles('Dockerfile') != ''
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: demo-app
+          severity: HIGH,CRITICAL
+          exit-code: "0"
+
+      - name: Report findings summary
+        run: |
+          echo "### Security Scan Summary" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f scan_results.json ]; then
+            echo "#### Custom Scanner Findings" >> "$GITHUB_STEP_SUMMARY"
+            python -c "import json; d=json.load(open('scan_results.json')); print(f'{len(d)} finding(s) detected')" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "Full details are available in the uploaded artifacts. No secrets are printed in this report." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload scan artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-results
+          path: |
+            scan_results.json
+            bandit_results.json
+            semgrep_results.json
+          if-no-files-found: ignore
