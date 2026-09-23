@@ -26,7 +26,9 @@ def create_branch(branch_name: str) -> None:
 
 
 def commit_files(files: List[str], message: str) -> None:
-    run(["git", "add", *files])
+    # -f: some generated files (e.g. scan_results.json) are gitignored as
+    # runtime artifacts, but ai-fix.yml intentionally commits them as PR evidence.
+    run(["git", "add", "-f", *files])
     run(["git", "-c", "user.name=ai-devops-bot", "-c", "user.email=ai-devops-bot@users.noreply.github.com",
          "commit", "-m", message])
 
