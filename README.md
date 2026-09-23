@@ -67,7 +67,8 @@ the pipeline is always runnable.
 | Secret | Required | Purpose |
 |---|---|---|
 | `OPENAI_API_KEY` | Optional | Enables LLM-based requirement analysis and fix generation. Without it, scripts use rule-based fallbacks. |
-| `GITHUB_TOKEN` | Provided automatically by Actions | Used to push branches and open PRs. No manual setup needed for the default token; ensure the repo setting **Settings → Actions → General → Workflow permissions** allows "Read and write permissions" and "Allow GitHub Actions to create and approve pull requests". |
+| `PAT_TOKEN` | **Required** for `ai-requirement.yml` | A Personal Access Token with `repo` + `workflow` scopes (classic) or Contents+Pull requests+Workflows (fine-grained). The default `GITHUB_TOKEN` cannot create or update files under `.github/workflows/`, so a PAT is required to commit the generated pipeline. Add it under **Settings → Secrets and variables → Actions → New repository secret**. |
+| `GITHUB_TOKEN` | Provided automatically by Actions | Used as a fallback for `ai-fix.yml`, which does not modify workflow files. Ensure **Settings → Actions → General → Workflow permissions** allows "Read and write permissions" and "Allow GitHub Actions to create and approve pull requests". |
 
 No API keys, tokens, or secrets are ever printed to logs by these scripts.
 
