@@ -1,0 +1,72 @@
+name: AI Fix
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue or PR number containing the detected problem"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  ai-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scan repository for issues
+        run: python scripts/scan_code.py . || true
+
+      - name: Generate AI fix
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_fix.py scan_results.json
+
+      - name: Prepare PR body
+        id: prepare
+        run: |
+          BRANCH_NAME="ai/fix-issue-${{ inputs.issue_number }}"
+          echo "branch_name=$BRANCH_NAME" >> "$GITHUB_OUTPUT"
+          python - <<'EOF'
+          import json
+          with open("fixes.json") as f:
+              fixes = json.load(f)
+          with open("fix_pr_body.md", "w") as f:
+              f.write("## Problem\n\n")
+              for fix in fixes:
+                  f.write(f"- `{fix['issue']}` in `{fix['file']}` (line {fix['line']}, severity {fix['severity']})\n")
+              f.write("\n## Root Cause\n\n")
+              for fix in fixes:
+                  f.write(f"- {fix['explanation']}\n")
+              f.write("\n## Fix\n\n")
+              for fix in fixes:
+                  f.write(f"**{fix['file']}:{fix['line']}**\n\n```python\n{fix['fixed_code']}\n```\n\n")
+                  f.write(f"Reason: {fix['reason']}\n\n")
+              f.write("## Validation\n\n")
+              f.write("- Generated fixes are proposed as a suggested patch and must be reviewed and tested by a human before merging.\n")
+              f.write("- No files were auto-merged; this PR requires manual approval.\n")
+          EOF
+
+      - name: Create branch, commit, and open PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/create_pr.py \
+            "${{ steps.prepare.outputs.branch_name }}" \
+            '["scan_results.json", "fixes.json"]' \
+            "AI Generated Fix (Issue #${{ inputs.issue_number }})" \
+            "fix_pr_body.md"

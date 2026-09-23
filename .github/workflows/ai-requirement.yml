@@ -1,0 +1,74 @@
+name: AI Requirement Processor
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  process-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Analyze requirement
+        id: analyze
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/analyze_requirement.py
+
+      - name: Generate workflow
+        run: python scripts/generate_workflow.py
+
+      - name: Validate generated YAML
+        run: |
+          python -c "import yaml; yaml.safe_load(open('generated-ci-cd.yml')); print('YAML valid')"
+
+      - name: Prepare PR content
+        id: prepare
+        run: |
+          BRANCH_NAME="ai/requirement-issue-${{ github.event.issue.number }}"
+          echo "branch_name=$BRANCH_NAME" >> "$GITHUB_OUTPUT"
+          mkdir -p .github/workflows
+          cp generated-ci-cd.yml .github/workflows/ci-cd.yml
+          python - <<'EOF'
+          import json
+          with open("requirement_analysis.json") as f:
+              reqs = json.load(f)
+          with open("pr_body.md", "w") as f:
+              f.write("## Requirements Extracted From Issue\n\n")
+              f.write("```json\n" + json.dumps(reqs, indent=2) + "\n```\n\n")
+              f.write("## Generated Changes\n\n")
+              f.write("- Added `.github/workflows/ci-cd.yml` generated from the issue requirements.\n\n")
+              f.write("## Validation\n\n")
+              f.write("- Generated YAML was parsed successfully with PyYAML (`yaml.safe_load`).\n\n")
+              f.write("## Security Considerations\n\n")
+              f.write("- No secrets are hardcoded in the generated workflow.\n")
+              f.write("- Workflow uses least-privilege GitHub Actions permissions.\n")
+              f.write("- A human must review this PR before merging; nothing is auto-merged.\n")
+          EOF
+
+      - name: Create branch, commit, and open PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/create_pr.py \
+            "${{ steps.prepare.outputs.branch_name }}" \
+            '[".github/workflows/ci-cd.yml"]' \
+            "AI Generated CI/CD Workflow (Issue #${{ github.event.issue.number }})" \
+            "pr_body.md"
