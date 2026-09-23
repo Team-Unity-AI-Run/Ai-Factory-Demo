@@ -1,0 +1,236 @@
+[
+  {
+    "file": "./tests/test_scan_code.py",
+    "line": 12,
+    "issue": "Hardcoded password",
+    "severity": "HIGH",
+    "explanation": "A password is hardcoded directly in source code, which exposes it to anyone with repository access and to version history.",
+    "fixed_code": "f.write_text('password = os.environ.get(\"F.WRITE_TEXT('PASSWORD\")",
+    "reason": "Secrets must be loaded from environment variables or GitHub Secrets, never committed to source."
+  },
+  {
+    "file": "./tests/test_scan_code.py",
+    "line": 20,
+    "issue": "Hardcoded API key or secret",
+    "severity": "HIGH",
+    "explanation": "An API key or secret is hardcoded directly in source code.",
+    "fixed_code": "f.write_text('api_key = os.environ.get(\"F.WRITE_TEXT('API_KEY\")",
+    "reason": "Credentials must come from GitHub Secrets/environment variables, not committed code."
+  },
+  {
+    "file": "./tests/test_scan_code.py",
+    "line": 48,
+    "issue": "Hardcoded password",
+    "severity": "HIGH",
+    "explanation": "A password is hardcoded directly in source code, which exposes it to anyone with repository access and to version history.",
+    "fixed_code": "f.write_text('password = os.environ.get(\"F.WRITE_TEXT('PASSWORD\")",
+    "reason": "Secrets must be loaded from environment variables or GitHub Secrets, never committed to source."
+  },
+  {
+    "file": "./examples/vulnerable_app.py",
+    "line": 6,
+    "issue": "Hardcoded password",
+    "severity": "HIGH",
+    "explanation": "A password is hardcoded directly in source code, which exposes it to anyone with repository access and to version history.",
+    "fixed_code": "password = os.environ.get(\"PASSWORD\")",
+    "reason": "Secrets must be loaded from environment variables or GitHub Secrets, never committed to source."
+  },
+  {
+    "file": "./examples/vulnerable_app.py",
+    "line": 7,
+    "issue": "Hardcoded API key or secret",
+    "severity": "HIGH",
+    "explanation": "An API key or secret is hardcoded directly in source code.",
+    "fixed_code": "api_key = os.environ.get(\"API_KEY\")",
+    "reason": "Credentials must come from GitHub Secrets/environment variables, not committed code."
+  },
+  {
+    "file": "./examples/vulnerable_app.py",
+    "line": 10,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./examples/vulnerable_app.py",
+    "line": 15,
+    "issue": "Dangerous shell/eval/exec usage",
+    "severity": "CRITICAL",
+    "explanation": "Use of shell=True, os.system, eval, or exec can allow command/code injection.",
+    "fixed_code": "subprocess.run([\"<command>\", \"<arg1>\"], shell=False, check=True)",
+    "reason": "Avoiding shell=True/eval/exec removes the primary vector for shell/code injection."
+  },
+  {
+    "file": "./examples/vulnerable_app.py",
+    "line": 18,
+    "issue": "Dangerous shell/eval/exec usage",
+    "severity": "CRITICAL",
+    "explanation": "Use of shell=True, os.system, eval, or exec can allow command/code injection.",
+    "fixed_code": "subprocess.run([\"<command>\", \"<arg1>\"], shell=False, check=True)",
+    "reason": "Avoiding shell=True/eval/exec removes the primary vector for shell/code injection."
+  },
+  {
+    "file": "./scripts/generate_workflow.py",
+    "line": 123,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/generate_workflow.py",
+    "line": 143,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/generate_workflow.py",
+    "line": 144,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/scan_code.py",
+    "line": 44,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/scan_code.py",
+    "line": 88,
+    "issue": "Dangerous shell/eval/exec usage",
+    "severity": "CRITICAL",
+    "explanation": "Use of shell=True, os.system, eval, or exec can allow command/code injection.",
+    "fixed_code": "subprocess.run([\"<command>\", \"<arg1>\"], shell=False, check=True)",
+    "reason": "Avoiding shell=True/eval/exec removes the primary vector for shell/code injection."
+  },
+  {
+    "file": "./scripts/scan_code.py",
+    "line": 112,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/scan_code.py",
+    "line": 119,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 50,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 64,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 75,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 90,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 104,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/create_pr.py",
+    "line": 106,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/generate_fix.py",
+    "line": 58,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/generate_fix.py",
+    "line": 93,
+    "issue": "Dangerous shell/eval/exec usage",
+    "severity": "CRITICAL",
+    "explanation": "Use of shell=True, os.system, eval, or exec can allow command/code injection.",
+    "fixed_code": "subprocess.run([\"<command>\", \"<arg1>\"], shell=False, check=True)",
+    "reason": "Avoiding shell=True/eval/exec removes the primary vector for shell/code injection."
+  },
+  {
+    "file": "./scripts/generate_fix.py",
+    "line": 134,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/analyze_requirement.py",
+    "line": 67,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  },
+  {
+    "file": "./scripts/analyze_requirement.py",
+    "line": 148,
+    "issue": "Debug print statement",
+    "severity": "LOW",
+    "explanation": "A debug print statement was left in the code, which can leak internal data in logs.",
+    "fixed_code": "# removed debug print; use logging.debug(...) instead if needed",
+    "reason": "Print statements should not be used for production logging or left as debug artifacts."
+  }
+]

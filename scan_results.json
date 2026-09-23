@@ -1,0 +1,210 @@
+[
+  {
+    "severity": "HIGH",
+    "file": "./tests/test_scan_code.py",
+    "line": 12,
+    "issue": "Hardcoded password",
+    "recommendation": "Use GitHub Secrets or environment variables.",
+    "code": "f.write_text('password = \"admin123\"\\n')"
+  },
+  {
+    "severity": "HIGH",
+    "file": "./tests/test_scan_code.py",
+    "line": 20,
+    "issue": "Hardcoded API key or secret",
+    "recommendation": "Use GitHub Secrets or environment variables. Never commit credentials.",
+    "code": "f.write_text('api_key = \"sk-12345\"\\n')"
+  },
+  {
+    "severity": "HIGH",
+    "file": "./tests/test_scan_code.py",
+    "line": 48,
+    "issue": "Hardcoded password",
+    "recommendation": "Use GitHub Secrets or environment variables.",
+    "code": "f.write_text('password = \"x\"\\n')"
+  },
+  {
+    "severity": "HIGH",
+    "file": "./examples/vulnerable_app.py",
+    "line": 6,
+    "issue": "Hardcoded password",
+    "recommendation": "Use GitHub Secrets or environment variables.",
+    "code": "password = \"admin123\""
+  },
+  {
+    "severity": "HIGH",
+    "file": "./examples/vulnerable_app.py",
+    "line": 7,
+    "issue": "Hardcoded API key or secret",
+    "recommendation": "Use GitHub Secrets or environment variables. Never commit credentials.",
+    "code": "api_key = \"sk-demo-1234567890abcdef\""
+  },
+  {
+    "severity": "LOW",
+    "file": "./examples/vulnerable_app.py",
+    "line": 10,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(\"Attempting login for:\", username)"
+  },
+  {
+    "severity": "CRITICAL",
+    "file": "./examples/vulnerable_app.py",
+    "line": 15,
+    "issue": "Dangerous shell/eval/exec usage",
+    "recommendation": "Avoid shell=True, os.system, eval, and exec. Use subprocess with argument lists.",
+    "code": "os.system(user_command)"
+  },
+  {
+    "severity": "CRITICAL",
+    "file": "./examples/vulnerable_app.py",
+    "line": 18,
+    "issue": "Dangerous shell/eval/exec usage",
+    "recommendation": "Avoid shell=True, os.system, eval, and exec. Use subprocess with argument lists.",
+    "code": "return eval(expression)"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/generate_workflow.py",
+    "line": 123,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[generate_workflow] YAML validation failed: {exc}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/generate_workflow.py",
+    "line": 143,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"Generated workflow written to {output_file}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/generate_workflow.py",
+    "line": 144,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(content)"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/scan_code.py",
+    "line": 44,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[scan_code] could not read {path}: {exc}\")"
+  },
+  {
+    "severity": "CRITICAL",
+    "file": "./scripts/scan_code.py",
+    "line": 88,
+    "issue": "Dangerous shell/eval/exec usage",
+    "recommendation": "Avoid shell=True, os.system, eval, and exec. Use subprocess with argument lists.",
+    "code": "\"recommendation\": \"Avoid shell=True, os.system, eval, and exec. Use subprocess with argument lists.\","
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/scan_code.py",
+    "line": 112,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(json.dumps(findings, indent=2))"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/scan_code.py",
+    "line": 119,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"\\n{len(critical_or_high)} HIGH/CRITICAL issue(s) found.\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 50,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[create_pr] gh pr create failed: {result.stderr.strip()}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 64,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(\"[create_pr] GITHUB_TOKEN or GITHUB_REPOSITORY not set; cannot call REST API.\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 75,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[create_pr] REST API PR creation failed with status {response.status_code}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 90,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(\"Usage: create_pr.py <branch_name> <files_json> <title> <body_file>\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 104,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"Pull request created: {pr_url}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/create_pr.py",
+    "line": 106,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(\"Pull request could not be created automatically. Push succeeded; open the PR manually.\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/generate_fix.py",
+    "line": 58,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[generate_fix] AI call failed, falling back to templates: {exc}\")"
+  },
+  {
+    "severity": "CRITICAL",
+    "file": "./scripts/generate_fix.py",
+    "line": 93,
+    "issue": "Dangerous shell/eval/exec usage",
+    "recommendation": "Avoid shell=True, os.system, eval, and exec. Use subprocess with argument lists.",
+    "code": "\"explanation\": \"Use of shell=True, os.system, eval, or exec can allow command/code injection.\","
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/generate_fix.py",
+    "line": 134,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(json.dumps(fixes, indent=2))"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/analyze_requirement.py",
+    "line": 67,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(f\"[analyze_requirement] AI call failed, falling back to keyword parser: {exc}\")"
+  },
+  {
+    "severity": "LOW",
+    "file": "./scripts/analyze_requirement.py",
+    "line": 148,
+    "issue": "Debug print statement",
+    "recommendation": "Remove debug prints or replace with proper logging.",
+    "code": "print(json.dumps(result, indent=2))"
+  }
+]
